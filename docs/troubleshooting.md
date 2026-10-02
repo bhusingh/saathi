@@ -2,6 +2,21 @@
 
 Each entry starts with the symptom, then the likely cause and fix.
 
+## Billing
+
+**Unexpected charge on Google Cloud.** Usually a Balanced disk, a non-free region or machine type, a second
+VM, a snapshot or static IP, or an external IPv4 charge. Check Billing → Reports grouped by SKU, delete the
+resource, and see [Billing safety](billing-safety.md). Budget alerts warn after the fact; they do not cap.
+
+**A free model or tool started costing money.** Free models get withdrawn, and wizards can switch on paid
+tools (image generation, web search, managed sandboxes). Keep no card or credits on Nous Portal and
+OpenRouter so these fail instead of billing, re-run `configure-free-models.sh`, and pick a current `:free`
+model.
+
+**Card declined during cloud sign-up.** Some providers reject prepaid or virtual cards for verification.
+Try a bank-issued virtual card with a spending limit, or a regular card with a low limit set in your banking
+app; do not remove the limit to make sign-up pass.
+
 ## Installation and cloud
 
 **`externally-managed-environment` on macOS/Homebrew Python.** The system Python follows PEP 668. Do not use

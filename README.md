@@ -29,6 +29,11 @@ feeds/APIs, and a currently free Nous Portal model. Free-tier terms, model avail
 external IPv4 pricing, and taxes can change. A budget alert is a warning, not a spending cap. See
 [costs](docs/costs.md) before creating anything.
 
+> **Before you add a card anywhere, read [Billing safety](docs/billing-safety.md).** Google Cloud and Oracle
+> require a card even for free tiers. Use a virtual or limited card with a low spending limit, never add a
+> card or credits to Nous Portal or OpenRouter (a $0 balance makes paid calls fail instead of billing you),
+> and set Modal's spending limit before connecting it.
+
 ## Options
 
 The default $0 stack is Hermes Agent + Nous Portal free models + a GCP `e2-micro` + local command
@@ -45,7 +50,8 @@ a small adapter.
 
 ## Prerequisites
 
-You need a Google account with a payment card for verification, a Discord account, and a Mac or Linux shell
+You need a Google account with a payment card for verification (ideally a virtual or limited card; see
+[Billing safety](docs/billing-safety.md)), a Discord account, and a Mac or Linux shell
 with `git` and the Google Cloud CLI. You also need a dedicated SSH key:
 
 ```bash
