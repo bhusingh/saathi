@@ -1,0 +1,280 @@
+schema_version: 1
+capabilities:
+  - id: ai_news
+    title: AI news
+    description: A cited daily digest of important AI news.
+    questions:
+      - {id: topics, prompt: "Which AI topics matter most?", type: list, default: [artificial intelligence, LLMs, AI agents]}
+    collectors: [ai_news]
+    jobs:
+      - {name: ai news, collector: ai_news, prompt_file: ai-news.md, channel: ai-news, agent: true}
+    channels: [ai-news]
+    default_schedule: "30 6 * * *"
+    addons: []
+    cost: Public feeds and APIs are free.
+    privacy: Topic queries are sent to the configured public sources.
+    ram: Low.
+  - id: github_trending
+    title: GitHub trending
+    description: Tracks noteworthy repositories by topic and observed star growth.
+    questions:
+      - {id: github_topics, prompt: "GitHub topics to track?", type: list, default: [llm, ai-agents, rag]}
+    collectors: [github_trending]
+    jobs:
+      - {name: github trending, collector: github_trending, prompt_file: github-trending.md, channel: github-trending, agent: true}
+    channels: [github-trending]
+    default_schedule: "0 7 * * 1,3,5"
+    addons: []
+    cost: Uses the free unauthenticated GitHub search allowance.
+    privacy: Search topics are sent to GitHub.
+    ram: Low.
+  - id: ai_engineering
+    title: AI engineering rotation
+    description: Rotates through configurable engineering and research topics.
+    questions:
+      - {id: engineering_topics, prompt: "Engineering topics, in rotation order?", type: list, default: [RAG and retrieval, Agents and tool use, Training and MLOps, Multimodal systems, Evaluation and inference]}
+    collectors: [research_rotation]
+    jobs:
+      - {name: research rotation, collector: research_rotation, prompt_file: topic-rotation.md, channel: research, agent: true}
+    channels: [research]
+    default_schedule: "30 7 * * 1-5"
+    addons: []
+    cost: Public arXiv queries are free.
+    privacy: Research queries are sent to arXiv.
+    ram: Low.
+  - id: creator_radar
+    title: Creator radar
+    description: Watches configured creators and formats.
+    questions:
+      - {id: creators, prompt: "Creator names, YouTube handles, or channel IDs?", type: list, default: []}
+    collectors: [creator_radar]
+    jobs:
+      - {name: creator radar, collector: creator_radar, prompt_file: creator-radar.md, channel: creator-radar, agent: true}
+    channels: [creator-radar]
+    default_schedule: "0 8 * * 1,3,5"
+    addons: [yt_dlp, agent_reach]
+    cost: Built-in public feeds are free; optional routes may have provider costs.
+    privacy: Public lookups expose the server IP; logged-in routes expose account sessions.
+    ram: Low without browser routes.
+  - id: content_ideas
+    title: Content ideas
+    description: Turns recent cited research into content ideas.
+    questions:
+      - {id: content_platforms, prompt: "Platforms to create ideas for?", type: list, default: [LinkedIn, YouTube]}
+    collectors: [digest]
+    jobs:
+      - {name: content ideas, collector: digest, prompt_file: content-ideas.md, channel: content, agent: true}
+    channels: [content]
+    default_schedule: "0 9 * * 1,3,5"
+    addons: []
+    cost: Uses the configured model.
+    privacy: Research excerpts and profile preferences go to the configured model.
+    ram: Low.
+  - id: linkedin_drafts
+    title: LinkedIn drafts
+    description: Creates review-only LinkedIn drafts from recent research.
+    questions:
+      - {id: linkedin_style, prompt: "Preferred LinkedIn voice and length?", type: text, default: concise and practical}
+    collectors: [digest]
+    jobs:
+      - {name: linkedin drafts, collector: digest, prompt_file: linkedin-drafts.md, channel: content, agent: true}
+    channels: [content]
+    default_schedule: "30 9 * * 2,4"
+    addons: []
+    cost: Uses the configured model.
+    privacy: Research excerpts and writing preferences go to the configured model.
+    ram: Low.
+  - id: reel_scripts
+    title: Reel scripts
+    description: Produces short review-only scripts from recent research.
+    questions:
+      - {id: reel_length, prompt: "Target reel length?", type: text, default: 45 seconds}
+    collectors: [digest]
+    jobs:
+      - {name: reel scripts, collector: digest, prompt_file: reel-scripts.md, channel: content, agent: true}
+    channels: [content]
+    default_schedule: "0 10 * * 2,4"
+    addons: []
+    cost: Uses the configured model.
+    privacy: Research excerpts and writing preferences go to the configured model.
+    ram: Low.
+  - id: youtube_package
+    title: YouTube package
+    description: Produces a title, outline, description, and chapter plan for review.
+    questions:
+      - {id: youtube_language, prompt: "YouTube output language?", type: text, default: English}
+    collectors: [digest]
+    jobs:
+      - {name: youtube package, collector: digest, prompt_file: youtube-package.md, channel: content, agent: true}
+    channels: [content]
+    default_schedule: "30 10 * * 5"
+    addons: [yt_dlp]
+    cost: Uses the configured model.
+    privacy: Research excerpts and writing preferences go to the configured model.
+    ram: Low.
+  - id: industry_signals
+    title: Industry signals
+    description: Tracks a company, competitors, products, and customer signals.
+    questions:
+      - {id: company, prompt: "Primary company or industry?", type: text, default: software industry}
+      - {id: competitors, prompt: "Competitors to track?", type: list, default: []}
+      - {id: regions, prompt: "Regions to prioritize?", type: list, default: [global]}
+    collectors: [industry_signals]
+    jobs:
+      - {name: industry signals, collector: industry_signals, prompt_file: industry-signals.md, channel: industry-signals, agent: true}
+    channels: [industry-signals]
+    default_schedule: "0 10 * * 1,3,5"
+    addons: []
+    cost: Public news and optional App Store feeds are free.
+    privacy: Company and competitor queries are sent to public sources.
+    ram: Low.
+  - id: recalls
+    title: Product recalls
+    description: Sends deterministic openFDA recall alerts.
+    questions:
+      - {id: recall_topics, prompt: "Recall product terms?", type: list, default: [pet products]}
+    collectors: [recalls]
+    jobs:
+      - {name: recall alerts, collector: recalls, prompt_file: null, channel: direct-message, agent: false}
+    channels: []
+    default_schedule: "15 * * * *"
+    addons: []
+    cost: The openFDA API is free.
+    privacy: Recall queries are sent to openFDA.
+    ram: Low.
+  - id: policy_watch
+    title: Policy watch
+    description: Tracks immigration or other policy topics with citations.
+    questions:
+      - {id: policy_topics, prompt: "Policy topics to track?", type: list, default: [employment immigration]}
+      - {id: regions, prompt: "Policy regions?", type: list, default: [United States]}
+    collectors: [policy_watch]
+    jobs:
+      - {name: policy watch, collector: policy_watch, prompt_file: policy-watch.md, channel: policy-watch, agent: true}
+    channels: [policy-watch]
+    default_schedule: "0 11 * * 2"
+    addons: []
+    cost: Public government and news sources are free.
+    privacy: Policy queries are sent to public sources.
+    ram: Low.
+  - id: markets_brief
+    title: Markets brief
+    description: Delivers a deterministic weekday watchlist brief.
+    questions:
+      - {id: tickers, prompt: "Ticker symbols?", type: list, default: [AAPL, MSFT]}
+    collectors: []
+    jobs:
+      - {name: market brief, command: [markets, brief], prompt_file: null, channel: markets, agent: false}
+    channels: [markets]
+    default_schedule: "0 6 * * 1-5"
+    addons: []
+    cost: Uses unofficial delayed Yahoo data at no software cost.
+    privacy: Ticker queries are sent to Yahoo.
+    ram: Low after the markets extra is installed by the owner.
+  - id: markets_alerts
+    title: Markets alerts
+    description: Sends deterministic threshold-crossing alerts.
+    questions:
+      - {id: tickers, prompt: "Ticker symbols?", type: list, default: [AAPL, MSFT]}
+    collectors: []
+    jobs:
+      - {name: market alerts, command: [markets, alerts], prompt_file: null, channel: markets, agent: false}
+    channels: [markets]
+    default_schedule: "*/5 9-16 * * 1-5"
+    addons: []
+    cost: Uses unofficial delayed Yahoo data at no software cost.
+    privacy: Ticker queries are sent to Yahoo.
+    ram: Low after the markets extra is installed by the owner.
+  - id: macro_calendar
+    title: Macro calendar
+    description: Delivers a deterministic weekly macro calendar.
+    questions: []
+    collectors: []
+    jobs:
+      - {name: macro week, command: [markets, macro, week], prompt_file: null, channel: markets, agent: false}
+    channels: [markets]
+    default_schedule: "0 7 * * 1"
+    addons: []
+    cost: Public sources are free.
+    privacy: Requests go only to configured market and government sources.
+    ram: Low.
+  - id: fundamentals
+    title: Fundamentals
+    description: Schedules deterministic fundamentals sheets for the watchlist.
+    questions:
+      - {id: tickers, prompt: "Ticker symbols?", type: list, default: [AAPL, MSFT]}
+    collectors: []
+    jobs:
+      - {name: fundamentals, command: [markets, fundamentals], prompt_file: null, channel: markets, agent: false}
+    channels: [markets]
+    default_schedule: "0 8 * * 1"
+    addons: []
+    cost: Uses unofficial delayed Yahoo data at no software cost.
+    privacy: Ticker queries are sent to Yahoo.
+    ram: Low after the markets extra is installed by the owner.
+  - id: deep_dive
+    title: Market deep dive
+    description: Runs an occasional deep dive for the first configured ticker.
+    questions:
+      - {id: tickers, prompt: "Ticker symbols?", type: list, default: [AAPL]}
+    collectors: []
+    jobs:
+      - {name: market deep dive, command: [markets, deep-dive], prompt_file: null, channel: markets, agent: false}
+    channels: [markets]
+    default_schedule: "0 9 * * 6"
+    addons: [tradingagents]
+    cost: Software is free; model or data providers may charge.
+    privacy: Research goes to the selected model and data providers.
+    ram: Heavy; run one at a time or use 4 GB or more.
+  - id: daily_agenda
+    title: Daily agenda
+    description: Summarizes recent outputs into a daily agenda.
+    questions: []
+    collectors: [digest]
+    jobs:
+      - {name: morning digest, collector: digest, prompt_file: digest.md, channel: daily, agent: true}
+    channels: [daily]
+    default_schedule: "15 8 * * *"
+    addons: []
+    cost: Uses the configured model.
+    privacy: Recent report excerpts and profile preferences go to the configured model.
+    ram: Low.
+  - id: weekly_review
+    title: Weekly review
+    description: Summarizes the week from local report outputs.
+    questions: []
+    collectors: [weekly]
+    jobs:
+      - {name: weekly review, collector: weekly, prompt_file: weekly.md, channel: weekly, agent: true}
+    channels: [weekly]
+    default_schedule: "30 18 * * 0"
+    addons: []
+    cost: Uses the configured model.
+    privacy: Recent report excerpts and profile preferences go to the configured model.
+    ram: Low.
+  - id: feedback
+    title: Weekly feedback
+    description: Asks which outputs were useful and records owner preferences.
+    questions: []
+    collectors: [weekly]
+    jobs:
+      - {name: weekly feedback, collector: weekly, prompt_file: feedback.md, channel: weekly, agent: true}
+    channels: [weekly]
+    default_schedule: "0 19 * * 0"
+    addons: []
+    cost: Uses the configured model.
+    privacy: Feedback stays in local state and is included in relevant model prompts.
+    ram: Low.
+  - id: health
+    title: Agent health
+    description: Delivers deterministic host-health warnings.
+    questions: []
+    collectors: []
+    jobs:
+      - {name: agent health, collector: health, prompt_file: null, channel: agent-ops, agent: false}
+    channels: [agent-ops]
+    default_schedule: "45 5 * * *"
+    addons: []
+    cost: Free and local.
+    privacy: Host metrics stay local.
+    ram: Negligible.

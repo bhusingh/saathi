@@ -1,0 +1,14 @@
+schema_version: 1
+topics:
+  artificial intelligence:
+    feeds:
+      - {name: OpenAI News, url: https://openai.com/news/rss.xml}
+    subreddits: [MachineLearning, LocalLLaMA]
+  robotics:
+    feeds:
+      - {name: IEEE Spectrum Robotics, url: https://spectrum.ieee.org/feeds/topic/robotics.rss}
+    subreddits: [robotics]
+  software engineering:
+    feeds:
+      - {name: Hacker News, url: https://news.ycombinator.com/rss}
+    subreddits: [programming]

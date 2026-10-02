@@ -1,0 +1,79 @@
+jobs:
+  - name: agent health
+    schedule: "45 5 * * *"
+    collector: health
+    prompt_file: null
+    channel: agent-ops
+    agent: false
+  - name: recall alerts
+    schedule: "15 * * * *"
+    collector: recalls
+    prompt_file: null
+    channel: direct-message
+    agent: false
+  - name: ai news
+    schedule: "30 6 * * *"
+    collector: ai_news
+    prompt_file: ai-news.md
+    channel: ai-news
+    agent: true
+  - name: github trending
+    schedule: "0 7 * * 1,3,5"
+    collector: github_trending
+    prompt_file: github-trending.md
+    channel: github-trending
+    agent: true
+  - name: research rotation
+    schedule: "30 7 * * 1-5"
+    collector: research_rotation
+    prompt_file: topic-rotation.md
+    channel: research
+    agent: true
+  - name: creator radar
+    schedule: "0 8 * * 1,3,5"
+    collector: creator_radar
+    prompt_file: creator-radar.md
+    channel: creator-radar
+    agent: true
+  - name: morning digest
+    schedule: "15 8 * * *"
+    collector: digest
+    prompt_file: digest.md
+    channel: daily
+    agent: true
+  - name: industry signals
+    schedule: "0 10 * * 1,3,5"
+    collector: industry_signals
+    prompt_file: industry-signals.md
+    channel: industry-signals
+    agent: true
+  - name: policy watch
+    schedule: "0 11 * * 2"
+    collector: policy_watch
+    prompt_file: policy-watch.md
+    channel: policy-watch
+    agent: true
+  - name: weekly review
+    schedule: "30 18 * * 0"
+    collector: weekly
+    prompt_file: weekly.md
+    channel: weekly
+    agent: true
+  - name: market brief
+    schedule: "0 6 * * 1-5"
+    command: [markets, brief]
+    prompt_file: null
+    channel: markets
+    agent: false
+  - name: market alerts
+    schedule: "*/5 9-16 * * 1-5"
+    command: [markets, alerts]
+    prompt_file: null
+    channel: markets
+    agent: false
+  - name: macro week
+    schedule: "0 7 * * 1"
+    command: [markets, macro, week]
+    prompt_file: null
+    channel: markets
+    agent: false

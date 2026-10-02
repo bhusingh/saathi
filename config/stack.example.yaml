@@ -1,0 +1,15 @@
+# These choices describe the installed stack. Hermes owns model and terminal execution settings;
+# deploy/bootstrap/configure-free-models.sh applies their environment-variable equivalents.
+runtime:
+  type: hermes
+  # Relative paths are resolved from the repository root.
+  interpreter: .venv/bin/python
+model:
+  provider: nous
+  base_url: http://127.0.0.1:8645/v1
+terminal:
+  backend: local
+  modal_mode: direct
+notifier:
+  backend: discord
+  target_prefix: discord

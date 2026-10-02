@@ -1,0 +1,34 @@
+schema_version: 1
+addons:
+  - id: yt_dlp
+    name: yt-dlp
+    url: https://github.com/yt-dlp/yt-dlp
+    licence: Unlicense
+    stars_as_of: {date: "2026-10-01", count: 195000}
+    adds: Public video metadata, audio, and captions.
+    ram: Low to moderate; downloads need disk.
+    risks: Direct requests reveal the host IP; cookies expose an account and can trigger bans.
+    install_steps:
+      - ".venv/bin/python -m pip install 'saathi-agent[youtube]'"
+  - id: agent_reach
+    name: Agent-Reach
+    url: https://github.com/Panniantong/Agent-Reach
+    licence: MIT
+    stars_as_of: {date: "2026-10-01", count: 88000}
+    adds: Routes for YouTube, GitHub, RSS, Reddit, X, and Instagram.
+    ram: Light except browser-backed routes.
+    risks: Cookie and logged-in-browser routes expose sessions and can trigger account bans.
+    install_steps:
+      - "git clone https://github.com/Panniantong/Agent-Reach.git ~/src/Agent-Reach"
+      - "Follow the reviewed upstream installation instructions in ~/src/Agent-Reach."
+  - id: tradingagents
+    name: TradingAgents
+    url: https://github.com/TauricResearch/TradingAgents
+    licence: Apache-2.0
+    stars_as_of: {date: "2026-10-01", count: 110000}
+    adds: Optional multi-agent market deep dives.
+    ram: Heavy; run one at a time or use 4 GB or more.
+    risks: Research goes to selected model and data vendors; never connect a brokerage.
+    install_steps:
+      - "git clone https://github.com/TauricResearch/TradingAgents.git ~/src/TradingAgents"
+      - ".venv/bin/python -m pip install -e ~/src/TradingAgents"

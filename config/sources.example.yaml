@@ -1,0 +1,125 @@
+http:
+  user_agent: "Saathi/0.1 (personal research reader; configure an operator contact for SEC access)"
+  timeout_seconds: 20
+  allowed_hosts:
+    - api.fda.gov
+    - api.github.com
+    - export.arxiv.org
+    - hacker-news.firebaseio.com
+    - news.google.com
+    - news.ycombinator.com
+    - openai.com
+    - www.federalregister.gov
+    - www.federalreserve.gov
+    - www.reddit.com
+
+# Source types are registry keys. Add entries or entire collectors without code changes.
+collectors:
+  ai_news:
+    type: news_digest
+    title: "AI news (whole field)"
+    sources:
+      - name: OpenAI News
+        type: rss
+        url: https://openai.com/news/rss.xml
+      - name: Google News AI
+        type: google_news
+        query: artificial intelligence OR LLM OR AI agents
+      - name: Hacker News AI
+        type: hackernews
+        keywords: [ai, llm, model, agent, inference, machine learning]
+      - name: MachineLearning community
+        type: reddit
+        subreddit: MachineLearning
+  github_trending:
+    type: github_trending
+    title: "Trending AI repositories on GitHub"
+    sources:
+      - name: GitHub AI topics
+        type: github
+        topics: [llm, ai-agents, rag, generative-ai, machine-learning, mcp]
+        rate_delay_seconds: 6.1
+  research_rotation:
+    type: topic_rotation
+    days:
+      "0":
+        title: "RAG and retrieval"
+        sources:
+          - name: arXiv retrieval
+            type: arxiv
+            query: 'abs:"retrieval augmented" OR abs:reranking'
+      "1":
+        title: "Agents and tool use"
+        sources:
+          - name: arXiv agents
+            type: arxiv
+            query: 'abs:"LLM agent" OR abs:"tool use"'
+      "2":
+        title: "Training and MLOps"
+        sources:
+          - name: arXiv continual learning
+            type: arxiv
+            query: 'abs:"continual learning" OR abs:"fine-tuning"'
+      "3":
+        title: "Multimodal systems"
+        sources:
+          - name: arXiv multimodal
+            type: arxiv
+            query: 'abs:"vision-language" OR abs:"speech recognition"'
+      "4":
+        title: "Evaluation and inference"
+        sources:
+          - name: arXiv evaluation
+            type: arxiv
+            query: 'abs:"LLM evaluation" OR abs:quantization'
+  creator_radar:
+    type: creator_radar
+    title: "Creator and format radar"
+    sources: []
+  industry_signals:
+    type: industry_signals
+    title: "Industry and customer signals"
+    sources:
+      - name: Industry news
+        type: google_news
+        query: software industry startup product launch
+  recalls:
+    type: recalls
+    title: "Pet-product recall alerts"
+    sources:
+      - name: openFDA animal recalls
+        type: openfda
+        lookback_days: 30
+  policy_watch:
+    type: policy_watch
+    title: "Employment and immigration policy"
+    sources:
+      - name: Federal Register employment policy
+        type: federal_register
+        term: employment immigration
+      - name: Policy news
+        type: google_news
+        query: employment immigration policy changes
+  digest:
+    type: digest
+    title: "Recent research outputs"
+    sources:
+      - name: Hermes reports
+        type: hermes_outputs
+        job_names: [ai news, github trending, research rotation, creator radar, industry signals]
+        max_age_hours: 24
+        characters: 2500
+  weekly:
+    type: weekly
+    title: "Week in review"
+    sources:
+      - name: Hermes reports
+        type: hermes_outputs
+        job_names: [ai news, github trending, research rotation, creator radar, industry signals, policy watch]
+        max_age_hours: 168
+        characters: 1500
+
+# Optional source templates. Copy into a collector and supply public identifiers locally.
+optional_source_templates:
+  youtube: {name: Creator name, type: youtube, channel_id: ""}
+  appstore: {name: Product reviews, type: appstore, app_id: ""}

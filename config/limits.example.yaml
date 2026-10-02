@@ -1,0 +1,12 @@
+feeds:
+  items_per_source: 15
+  max_age_hours: 48
+github:
+  unauthenticated_searches_per_minute: 9
+reports:
+  max_items: 25
+  max_summary_characters: 280
+subprocess:
+  default_timeout_seconds: 120
+  deep_dive_timeout_seconds: 1800
+

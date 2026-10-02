@@ -1,0 +1,15 @@
+owner:
+  display_name: "the owner"
+  timezone: "America/Los_Angeles"
+  roles: []
+  interests:
+    - artificial intelligence
+    - software engineering
+  content:
+    audiences: []
+    platforms: []
+    languages: []
+rules:
+  - Keep private information out of reports.
+  - Ask before taking any action outside the configured collectors.
+

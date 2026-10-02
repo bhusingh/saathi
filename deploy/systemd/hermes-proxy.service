@@ -1,0 +1,19 @@
+[Unit]
+Description=Hermes localhost OpenAI-compatible proxy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/hermes proxy start --host 127.0.0.1 --port 8645
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.hermes
+
+[Install]
+WantedBy=default.target
+

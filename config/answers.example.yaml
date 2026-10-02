@@ -1,0 +1,14 @@
+# Copy this file before editing. Never put secrets in an answers file.
+profile: >-
+  I am a software engineer who wants concise, cited research and review-only content drafts.
+display_name: the owner
+capabilities: [ai_news, ai_engineering, daily_agenda, weekly_review, feedback, health]
+timezone: America/Los_Angeles
+chat_app: discord
+privacy: balanced
+topics: [artificial intelligence, software engineering]
+languages: [English]
+schedules: {}
+addons: []
+discover: false
+approved: false

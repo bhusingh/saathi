@@ -1,0 +1,17 @@
+tickers:
+  - AAPL
+  - MSFT
+index_tickers:
+  - SPY
+  - QQQ
+  - IWM
+context:
+  - ^VIX
+  - ^TNX
+alert_thresholds:
+  stock_percent: 5.0
+  index_percent: 2.0
+  vix_levels: [30, 40, 50]
+  vix_jump_percent: 20.0
+  circuit_breakers: [-7, -13, -20]
+risk_free_rate: 0.04
